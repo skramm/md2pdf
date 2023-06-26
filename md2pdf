@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set +x
+
+if ! [ -n "$1" ]
+then
+	echo "md2dpf: you forgot to mention a filename"
+	exit 1
+fi
+
+if ! [ -e "$1" ]
+then
+	echo "md2dpf: file $1 is non-existent"
+	exit 2
+fi
+
+
+a=$1
+b=${a%.*}
+echo "a=$a b=$b"
+	
+pandoc -V papersize=A4 \
+	--metadata pagetitle="$a" \
+	--data-dir=/usr/local/share/md2pdf \
+	--template=mytemplate.html5
+	-V margin-left=0.7in \
+	-V margin-right=0.7in \
+	-V margin-top=0.7in \
+	-V margin-bottom=0.7in \
+	$a -f markdown+autolink_bare_uris+pipe_tables \
+	-t html -o $b.pdf
+	
+
