@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# https://github.com/skramm/md2pdf
+
 set +x
 
 if ! [ -n "$1" ]
@@ -17,20 +19,21 @@ fi
 
 a=$1
 b=${a%.*}
+c=${b##*/}  
 echo "md2pdf: converting file $a to $b.pdf"
 
-# in case of trouble, add this:
-#	--verbose \
-	
 pandoc -V papersize=A4 \
+	--standalone \
+	--verbose \
+	--template=/usr/local/share/md2pdf/mytemplate.html5 \
+	--css=/usr/local/share/md2pdf/mystyles.css \
 	--metadata pagetitle="$a" \
-	--data-dir=/usr/local/share/md2pdf \
-	--template=mytemplate.html5 \
 	-V margin-left=0.7in \
 	-V margin-right=0.7in \
 	-V margin-top=0.7in \
 	-V margin-bottom=0.7in \
 	-f markdown+autolink_bare_uris+pipe_tables \
-	-t html $a -o $b.pdf
+	-t html \
+	$a -o $b.pdf 1>/tmp/md2pdf_$c.stdout 2>/tmp/md2pdf_$c.stderr
 	
 

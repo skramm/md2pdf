@@ -7,4 +7,5 @@ cp md2pdf /usr/local/bin/
 chmod +x /usr/local/bin/md2pdf
 mkdir -p /usr/local/share/md2pdf
 cp mytemplate.html5 /usr/local/share/md2pdf/
+cp mystyles.css /usr/local/share/md2pdf/
 
