@@ -17,17 +17,20 @@ fi
 
 a=$1
 b=${a%.*}
-echo "a=$a b=$b"
+echo "md2pdf: converting file $a to $b.pdf"
+
+# in case of trouble, add this:
+#	--verbose \
 	
 pandoc -V papersize=A4 \
 	--metadata pagetitle="$a" \
 	--data-dir=/usr/local/share/md2pdf \
-	--template=mytemplate.html5
+	--template=mytemplate.html5 \
 	-V margin-left=0.7in \
 	-V margin-right=0.7in \
 	-V margin-top=0.7in \
 	-V margin-bottom=0.7in \
-	$a -f markdown+autolink_bare_uris+pipe_tables \
-	-t html -o $b.pdf
+	-f markdown+autolink_bare_uris+pipe_tables \
+	-t html $a -o $b.pdf
 	
 
