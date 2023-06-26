@@ -13,7 +13,8 @@ Pandoc is great, but remembering all its options every time you want to do that 
 So this is a simple wrapper that adds some basic options for you.
 And of course, you may tweak it as required!
 
-The idea came from the great rendering done by the  "Markdown PDF" VSCode extension (see https://github.com/yzane/vscode-markdown-pdf).
+The idea came from the great rendering done by the  "Markdown PDF" VSCode extension<br>
+(see https://github.com/yzane/vscode-markdown-pdf).
 Unfortunately, this extension cannot be "batched" outside VSCode, and I wanted something running from CLI.
 The goal is to produce something as neat (not yet... working on it!)
 
@@ -31,7 +32,7 @@ Usage:
 ```
 $ md2pdf myfile.md
 ```
-
+This will generate a file `myfile.pdf` in local folder.
 
 
 
