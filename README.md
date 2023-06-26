@@ -17,6 +17,24 @@ The idea came from the great rendering done by the  "Markdown PDF" VSCode extens
 Unfortunately, this extension cannot be "batched" outside VSCode, and I wanted something running from CLI.
 The goal is to produce something as neat (not yet... working on it!)
 
+## Install & usage
+
+Install: clone repos, then:
+```
+$ cd md2pdf
+$ sudo ./install
+```
+
+This installs the script in a folder that should already be in your $PATH (`/usr/local/bin`).
+
+Usage:
+```
+$ md2pdf myfile.md
+```
+
+
+
+
 ## Technical details
 
 Converting from Markdown to pdf using Pandoc needs to be done in two steps, but you have the choice of two options:
