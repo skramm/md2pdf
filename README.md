@@ -4,6 +4,11 @@ A pandoc-based Markdown to pdf script
 * Sebastien Kramm, 2023/06
 * https://github.com/skramm/md2pdf
 
+## News
+
+* 20231113:
+  * Added checking for the presence of wkhtmltopdf and pandoc
+  * Added pandoc error code checking
 
 ## Rationale
 
@@ -48,13 +53,16 @@ Converting from Markdown to pdf using Pandoc needs to be done in two steps, but 
 * convert Markdown to LaTeX, then from LaTeX to pdf
 * convert Markdown to HTML(5), then from HTML to pdf using wkhtmltopdf
 
-This scripts uses the second method, as it is much easier to tweak the appearance using CSS.
-This can be done by adding the required CSS styles either in the included Pandoc template, or in the included CSS stylesheet.
+The first method requires a complete LaTeX environment installed on your system, which isn't that frequent.
+Thus, this scripts uses the second method.
+Moreover, it is much easier to tweak the appearance using CSS.
+This can be done by adding the required CSS styles either in the included Pandoc template, or in the included CSS stylesheet
+(that are located after install in /usr/local/share/md2pdf/).
 
 in case of trouble, you can check the standard output files
-`/tmp/md2pdf_FILENAME.stdout` and `/tmp/md2pdf_FILENAME.stderr`
+`/tmp/md2pdf/md2pdf_FILENAME.stdout` and `/tmp/md2pdf/md2pdf_FILENAME.stderr`
 
-## Requirements
+## Requirements (aka "known to work with" )
 
 * pandoc: 2.5
 * wkhtmltopdf: 0.12.5

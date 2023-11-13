@@ -2,6 +2,22 @@
 
 # https://github.com/skramm/md2pdf
 
+# news:
+# - added checking for requirements
+# - added enable-local-file-access to options
+
+
+function checkreq
+{
+	which $1 > /dev/null
+	if [ $? != 0 ]
+	then
+		echo "ERROR: it seems you don't have $1 installed on your system, please install first"
+		echo "with 'sudo apt install $1'"
+		exit 1;
+	fi
+}
+
 set +x
 
 if ! [ -n "$1" ]
@@ -16,11 +32,17 @@ then
 	exit 2
 fi
 
+checkreq pandoc
+checkreq wkhtmltopdf
+
+# output logs are stored here:
+mkdir -p /tmp/md2pdf
 
 a=$1
 b=${a%.*}
 c=${b##*/}  
 echo "md2pdf: converting file $a to $b.pdf"
+pwd
 
 pandoc -V papersize=A4 \
 	--standalone \
@@ -28,12 +50,20 @@ pandoc -V papersize=A4 \
 	--template=/usr/local/share/md2pdf/mytemplate.html5 \
 	--css=/usr/local/share/md2pdf/mystyles.css \
 	--metadata pagetitle="$a" \
+	--pdf-engine-opt=--enable-local-file-access \
 	-V margin-left=0.7in \
 	-V margin-right=0.7in \
 	-V margin-top=0.7in \
 	-V margin-bottom=0.7in \
 	-f markdown+autolink_bare_uris+pipe_tables \
 	-t html \
-	$a -o $b.pdf 1>/tmp/md2pdf_$c.stdout 2>/tmp/md2pdf_$c.stderr
-	
+	$a -o $b.pdf 1>/tmp/md2pdf/md2pdf_$c.stdout 2>/tmp/md2pdf/md2pdf_$c.stderr
+
+err=$?
+if [ $err != 0 ]
+then
+	echo "Pandoc returned $err instead of 0, something might gone wrong, check logs in /tmp/md2pdf"
+else
+	echo "Success!"
+fi
 
