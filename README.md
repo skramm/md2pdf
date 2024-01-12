@@ -6,22 +6,25 @@ A pandoc-based Markdown to pdf script
 
 ## News
 
+* 20240112:
+  * added .desktop file for easy desktop integration
+  
 * 20231113:
   * Added checking for the presence of wkhtmltopdf and pandoc
   * Added pandoc error code checking
 
 ## Rationale
 
-This a simple (but convenient) bash script that converts a Markdown file to a (beautiful) pdf, using Pandoc's power.
+This a simple bash script that converts a Markdown file to a (beautiful) pdf, using Pandoc's power.
 
 Pandoc is great, but remembering all its options every time you want to do that is pretty much tedious.
 So this is a simple wrapper that adds some basic options for you.
-And you can easily tweak it as required!
+And you can easily tweak it as required.
 
 The idea came from the great rendering done by the "Markdown PDF" VSCode extension<br>
 (see https://github.com/yzane/vscode-markdown-pdf).
 Unfortunately, it seems that this extension cannot be "batched" outside VSCode, and I wanted something running from CLI.
-The goal is to produce something as neat (not yet... working on it!)
+The goal is to produce something as neat (working on it...)
 
 ## Install & usage
 
@@ -45,6 +48,11 @@ But the script also accepts a path in filename, thus these are fine:
 $ md2pdf "../../some file.md"
 $ md2pdf location/to/some-file.md
 ```
+
+For KDE/Gnome and related desktop environnments, a .desktop file is also provided and installed, so it is now possible to use this directly with a right-clic on a .md file.
+
+This might require to run `$ sudo update-desktop-database` to get it available into your file explorer.
+
 
 ## Technical details
 

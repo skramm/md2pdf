@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# this removes all installed files.
+# needs to be run with sudo
+
+rm /usr/local/bin/md2pdf
+rm /usr/local/share/md2pdf/mytemplate.html5
+rm /usr/local/share/md2pdf/mystyles.css
+rm /usr/share/applications/md2pdf.desktop
+

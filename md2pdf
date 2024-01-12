@@ -23,12 +23,14 @@ set +x
 if ! [ -n "$1" ]
 then
 	echo "md2dpf: you forgot to mention a filename"
+	read
 	exit 1
 fi
 
 if ! [ -e "$1" ]
 then
 	echo "md2dpf: file $1 is non-existent"
+	read
 	exit 2
 fi
 
@@ -42,7 +44,6 @@ a=$1
 b=${a%.*}
 c=${b##*/}  
 echo "md2pdf: converting file $a to $b.pdf"
-pwd
 
 pandoc -V papersize=A4 \
 	--standalone \
@@ -62,8 +63,10 @@ pandoc -V papersize=A4 \
 err=$?
 if [ $err != 0 ]
 then
-	echo "Pandoc returned $err instead of 0, something might gone wrong, check logs in /tmp/md2pdf"
+	echo "md2pdf: Pandoc returned $err instead of 0, something might gone wrong, check logs in /tmp/md2pdf"
+	read
 else
-	echo "Success!"
+	echo "md2pdf: Success!"
 fi
+
 
