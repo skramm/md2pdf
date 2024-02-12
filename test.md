@@ -23,4 +23,6 @@ A list:
 * item 2
 * item 3
 
+And an obligatory image:
 
+![Tux](Tux.png "Tux")

@@ -19,6 +19,8 @@ function checkreq
 }
 
 set +x
+echo "pwd=$(pwd)"
+echo "arg=$1"
 
 if ! [ -n "$1" ]
 then
@@ -41,9 +43,20 @@ checkreq wkhtmltopdf
 mkdir -p /tmp/md2pdf
 
 a=$1
+# remove file extension
 b=${a%.*}
-c=${b##*/}  
+#echo "b=$b"
+
+# remove path
+name=${b##*/}  
+#echo "c=$c"
+
+# path only (needed to get the images)
+loc=${a%/*}
+#echo "loc=$loc"
+
 echo "md2pdf: converting file $a to $b.pdf"
+pushd "$loc"
 
 pandoc -V papersize=A4 \
 	--standalone \
@@ -58,7 +71,7 @@ pandoc -V papersize=A4 \
 	-V margin-bottom=0.7in \
 	-f markdown+autolink_bare_uris+pipe_tables \
 	-t html \
-	$a -o $b.pdf 1>/tmp/md2pdf/md2pdf_$c.stdout 2>/tmp/md2pdf/md2pdf_$c.stderr
+	$a -o $b.pdf 1>/tmp/md2pdf/md2pdf_$name.stdout 2>/tmp/md2pdf/md2pdf_$name.stderr
 
 err=$?
 if [ $err != 0 ]
@@ -68,5 +81,5 @@ then
 else
 	echo "md2pdf: Success!"
 fi
-
+popd
 
