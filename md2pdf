@@ -13,7 +13,7 @@ function checkreq
 	if [ $? != 0 ]
 	then
 		echo "ERROR: it seems you don't have $1 installed on your system, please install first"
-		echo "with 'sudo apt install $1'"
+		echo "with 'sudo apt install $1' (or whatever way you use to install stuff)."
 		exit 1;
 	fi
 }
@@ -53,7 +53,7 @@ name=${b##*/}
 
 # path only (needed to get the images)
 loc=${a%/*}
-#echo "loc=$loc"
+echo "loc=$loc"
 
 echo "md2pdf: converting file $a to $b.pdf"
 pushd "$loc"
@@ -71,7 +71,7 @@ pandoc -V papersize=A4 \
 	-V margin-bottom=0.7in \
 	-f markdown+autolink_bare_uris+pipe_tables \
 	-t html \
-	$a -o $b.pdf 1>/tmp/md2pdf/md2pdf_$name.stdout 2>/tmp/md2pdf/md2pdf_$name.stderr
+	"$a" -o "$b.pdf" 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"
 
 err=$?
 if [ $err != 0 ]

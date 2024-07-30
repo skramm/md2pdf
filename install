@@ -10,3 +10,10 @@ cp mytemplate.html5 /usr/local/share/md2pdf/
 cp mystyles.css /usr/local/share/md2pdf/
 cp md2pdf.desktop /usr/share/applications
 
+#xdg-mime default md2pdf.desktop text/markdown
+
+#update-mime-database $HOME/.local/share/mime
+#update-mime-database
+
+#update-desktop-database
+#update-desktop-database $HOME/.local/share/applications
