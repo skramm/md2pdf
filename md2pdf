@@ -2,10 +2,6 @@
 
 # https://github.com/skramm/md2pdf
 
-# news:
-# - added checking for requirements
-# - added enable-local-file-access to options
-
 
 function checkreq
 {
@@ -56,8 +52,8 @@ loc=${a%/*}
 echo "loc=$loc"
 
 echo "md2pdf: converting file $a to $b.pdf"
-pushd "$loc"
-
+#pushd "$loc"
+pwd
 pandoc -V papersize=A4 \
 	--standalone \
 	--verbose \
@@ -81,5 +77,5 @@ then
 else
 	echo "md2pdf: Success!"
 fi
-popd
+#popd
 

@@ -6,9 +6,10 @@ A pandoc-based Markdown to pdf script
 
 ## News
 
+* 20241031:
+  * removed pushs/popd: now works from current folder
 * 20240112:
   * added .desktop file for easy desktop integration
-  
 * 20231113:
   * Added checking for the presence of wkhtmltopdf and pandoc
   * Added pandoc error code checking
@@ -23,8 +24,8 @@ And you can easily tweak it as required.
 
 The idea came from the great rendering done by the "Markdown PDF" VSCode extension<br>
 (see https://github.com/yzane/vscode-markdown-pdf).
-Unfortunately, it seems that this extension cannot be "batched" outside VSCode, and I wanted something running from CLI.
-The goal is to produce something as neat (working on it...)
+Unfortunately, it seems that this extension cannot be "batched" outside VSCode, and I wanted something running from CLI or desktop.
+The goal is to produce something as neat.
 
 ## Install & usage
 
