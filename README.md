@@ -35,7 +35,7 @@ $ cd md2pdf
 $ sudo ./install
 ```
 
-This installs the script in a folder that should already be in your $PATH (`/usr/local/bin`).
+This installs the script in a folder that should already be in your $PATH (`/usr/local/bin`), and the additional files in `/usr/local/share/md2pdf/`.
 
 ### Usage:
 ```

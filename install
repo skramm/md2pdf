@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This installs the program to a standardized system-wide path, so it can be used by anyone.
+# This installs the program to a standardized Linux system-wide path.
 # Needs to be run with sudo
 
 cp md2pdf /usr/local/bin/
