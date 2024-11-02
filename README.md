@@ -5,9 +5,8 @@ A pandoc-based Markdown to pdf script
 * https://github.com/skramm/md2pdf
 
 ## News
-
-* 20241031:
-  * removed pushs/popd: now works from current folder
+* 20241102
+  * cleanout, added some colors
 * 20240112:
   * added .desktop file for easy desktop integration
 * 20231113:
@@ -57,6 +56,7 @@ This might require to run `$ sudo update-desktop-database` to get it available i
 
 ## Technical details
 
+### 1 - Steps
 Converting from Markdown to pdf using Pandoc needs to be done in two steps, but you have the choice of two options:
 
 * convert Markdown to LaTeX, then from LaTeX to pdf
@@ -70,6 +70,22 @@ This can be done by adding the required CSS styles either in the included Pandoc
 
 in case of trouble, you can check the standard output files
 `/tmp/md2pdf/md2pdf_FILENAME.stdout` and `/tmp/md2pdf/md2pdf_FILENAME.stderr`
+
+### 2 - Processing sets of file
+
+You can use this to process a set of files lying in subfolders by using the `find` command:
+```
+find . -iname "*.md" -exec md2pdf {} \;
+```
+
+(`-iname` is used here because some people use `.MD` instead of `.md`, but the script will accept both)
+
+
+### 3 - Current folder
+
+The script changes the current folder for the one where the file stays.
+This is needed so that images that could be referenced in sub-folders are correctly embedded in the output pdf file.
+This is done with `pushd` and restored with `popd`.
 
 ## Requirements (aka "known to work with" )
 

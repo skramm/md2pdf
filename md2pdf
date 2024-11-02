@@ -15,8 +15,8 @@ function checkreq
 }
 
 set +x
-echo "pwd=$(pwd)"
-echo "arg=$1"
+#echo "pwd=$(pwd)"
+#echo "arg=$1"
 
 if ! [ -n "$1" ]
 then
@@ -43,23 +43,26 @@ a=$1
 b=${a%.*}
 #echo "b=$b"
 
+ext=${a##*.}
+#echo "ext=$ext"
+
 # remove path
 name=${b##*/}  
-#echo "c=$c"
+#echo "name=$name"
 
 # path only (needed to get the images)
 loc=${a%/*}
-echo "loc=$loc"
+#echo "loc=$loc"
 
 echo "md2pdf: converting file $a to $b.pdf"
-#pushd "$loc"
-pwd
+pushd "$loc" >/dev/null
+
 pandoc -V papersize=A4 \
 	--standalone \
 	--verbose \
 	--template=/usr/local/share/md2pdf/mytemplate.html5 \
 	--css=/usr/local/share/md2pdf/mystyles.css \
-	--metadata pagetitle="$a" \
+	--metadata pagetitle="$name" \
 	--pdf-engine-opt=--enable-local-file-access \
 	-V margin-left=0.7in \
 	-V margin-right=0.7in \
@@ -67,15 +70,16 @@ pandoc -V papersize=A4 \
 	-V margin-bottom=0.7in \
 	-f markdown+autolink_bare_uris+pipe_tables \
 	-t html \
-	"$a" -o "$b.pdf" 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"
+	"$name.$ext" -o "$name.pdf" 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"
 
 err=$?
 if [ $err != 0 ]
 then
-	echo "md2pdf: Pandoc returned $err instead of 0, something might gone wrong, check logs in /tmp/md2pdf"
+	echo -e "md2pdf: \e[31mFailure\e[0m, Pandoc returned $err instead of 0, something might gone wrong, check logs in /tmp/md2pdf"
+	echo "Hit a key"
 	read
 else
-	echo "md2pdf: Success!"
+	echo -e "md2pdf: \e[32mSuccess!\e[0m"
 fi
-#popd
+popd >/dev/null
 
