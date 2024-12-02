@@ -5,7 +5,9 @@ A pandoc-based Markdown to pdf script
 * https://github.com/skramm/md2pdf
 
 ## News
-* 20241102
+* 20240102:
+  * now use the [Commonmark](https://spec.commonmark.org/) option
+* 20241102:
   * cleanout, added some colors
 * 20240112:
   * added .desktop file for easy desktop integration

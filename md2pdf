@@ -68,7 +68,7 @@ pandoc -V papersize=A4 \
 	-V margin-right=0.7in \
 	-V margin-top=0.7in \
 	-V margin-bottom=0.7in \
-	-f markdown+autolink_bare_uris+pipe_tables \
+	--from commonmark+autolink_bare_uris+pipe_tables \
 	-t html \
 	"$name.$ext" -o "$name.pdf" 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"
 
