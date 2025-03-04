@@ -2,6 +2,8 @@
 
 # https://github.com/skramm/md2pdf
 
+# 2025/03: tested with pdfcpu 0.9.1
+# https://github.com/pdfcpu/pdfcpu
 
 function checkreq
 {
@@ -34,6 +36,7 @@ fi
 
 checkreq pandoc
 checkreq wkhtmltopdf
+checkreq pdfcpu
 
 # output logs are stored here:
 mkdir -p /tmp/md2pdf
@@ -70,7 +73,7 @@ pandoc -V papersize=A4 \
 	-V margin-bottom=0.7in \
 	--from commonmark+autolink_bare_uris+pipe_tables \
 	-t html \
-	"$name.$ext" -o "$name.pdf" 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"
+	"$name.$ext" -o /tmp/md2pdf/out.pdf 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"
 
 err=$?
 if [ $err != 0 ]
@@ -81,5 +84,15 @@ then
 else
 	echo -e "md2pdf: \e[32mSuccess!\e[0m"
 fi
+
+# adding page number with pdfcpu
+# https://pdfcpu.io/core/stamp
+# pos: see https://pdfcpu.io/getting_started/box
+# bc: bottom center
+# op: opacity
+pdfcpu stamp add -mode text -- "p. %p/%P" "scale:.6 abs, op:0.95, pos:bc, rot:0, margins:20" \
+	/tmp/md2pdf/out.pdf \
+	"$name.pdf"
+
 popd >/dev/null
 
