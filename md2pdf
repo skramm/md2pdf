@@ -36,8 +36,13 @@ fi
 
 checkreq pandoc
 checkreq wkhtmltopdf
-checkreq pdfcpu
 
+haspdfcpu=true
+which pdfcpu > /dev/null
+if [ $? != 0 ]; then
+	echo "pdfcpu not installed, no page numbers printed on output pdf file"
+	haspdfcpu=false
+fi
 # output logs are stored here:
 mkdir -p /tmp/md2pdf
 
@@ -90,9 +95,14 @@ fi
 # pos: see https://pdfcpu.io/getting_started/box
 # bc: bottom center
 # op: opacity
-pdfcpu stamp add -mode text -- "p. %p/%P" "scale:.6 abs, op:0.95, pos:bc, rot:0, margins:20" \
-	/tmp/md2pdf/out.pdf \
-	"$name.pdf"
+if [ haspdfcpu = true ]
+then
+	pdfcpu stamp add -mode text -- "p. %p/%P" "scale:.6 abs, op:0.95, pos:bc, rot:0, margins:20" \
+		/tmp/md2pdf/out.pdf \
+		"$name.pdf"
+else
+	cp /tmp/md2pdf/out.pdf "$name.pdf"
+fi
 
 popd >/dev/null
 

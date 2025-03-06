@@ -1,12 +1,15 @@
 # md2pdf
 A pandoc-based Markdown to pdf script
 
-* Sebastien Kramm, 2023/06
+* Sebastien Kramm, 2023 - 2025
 * https://github.com/skramm/md2pdf
 
 ## News
+* 20250306:
+  * added (optional) feature: print page numbers ("page X/Y") on output pdf file.
+  Requires pdfcpu (https://pdfcpu.io/)
 * 20240102:
-  * now use the [Commonmark](https://spec.commonmark.org/) option
+  * now use the [Commonmark](https://spec.commonmark.org/) Pandoc option, to use the Commonmark dialect (see https://commonmark.org/).
 * 20241102:
   * cleanout, added some colors
 * 20240112:
@@ -51,7 +54,7 @@ $ md2pdf "../../some file.md"
 $ md2pdf location/to/some-file.md
 ```
 
-For KDE/Gnome and related desktop environnments, a .desktop file is also provided and installed, so it is now possible to use this directly with a right-clic on a .md file.
+For KDE/Gnome and related desktop environnments, a `.desktop` file is also provided and installed, so it is now possible to use this directly with a right-clic on a .md file.
 
 This might require to run `$ sudo update-desktop-database` to get it available into your file explorer.
 
@@ -64,14 +67,19 @@ Converting from Markdown to pdf using Pandoc needs to be done in two steps, but 
 * convert Markdown to LaTeX, then from LaTeX to pdf
 * convert Markdown to HTML(5), then from HTML to pdf using wkhtmltopdf
 
-The first method requires a complete LaTeX environment installed on your system, which isn't that frequent.
+The first method requires a complete LaTeX environment installed on your system, which isn't that frequent for most users.
 Thus, this scripts uses the second method.
 Moreover, it is much easier to tweak the appearance using CSS.
 This can be done by adding the required CSS styles either in the included Pandoc template, or in the included CSS stylesheet
 (that are located after install in /usr/local/share/md2pdf/).
 
-in case of trouble, you can check the standard output files
+in case of trouble, you can check the standard output files:  
 `/tmp/md2pdf/md2pdf_FILENAME.stdout` and `/tmp/md2pdf/md2pdf_FILENAME.stderr`
+
+**New feature**  
+With the help of pdfcpu, the output file now has the page numbers printed on bottom of page.
+This is done by a post-processing step, pdfcpu takes the Pandoc output file and adds on each page the page numbers.
+
 
 ### 2 - Processing sets of file
 
@@ -93,10 +101,12 @@ This is done with `pushd` and restored with `popd`.
 
 * pandoc: 2.5
 * wkhtmltopdf: 0.12.5
+* pdfcpu (optional): 0.9.1
 
 ## References
 * https://pandoc.org/
 * https://wkhtmltopdf.org/
+* https://pdfcpu.io/ - https://github.com/pdfcpu/pdfcpu
 
 ## TODO
 
