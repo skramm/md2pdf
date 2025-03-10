@@ -5,6 +5,8 @@ A pandoc-based Markdown to pdf script
 * https://github.com/skramm/md2pdf
 
 ## News
+* 20250310:
+  * added option to print on Landscape
 * 20250306:
   * added (optional) feature: print page numbers ("page X/Y") on output pdf file.
   Requires pdfcpu (https://pdfcpu.io/)
@@ -52,6 +54,11 @@ But the script also accepts a path in filename, thus these are fine:
 ```
 $ md2pdf "../../some file.md"
 $ md2pdf location/to/some-file.md
+```
+
+Passing the `-L` option will generate a landscape pdf:
+```
+$ md2pdf -L myfile.md
 ```
 
 For KDE/Gnome and related desktop environnments, a `.desktop` file is also provided and installed, so it is now possible to use this directly with a right-clic on a .md file.

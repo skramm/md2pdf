@@ -5,6 +5,8 @@
 # 2025/03: tested with pdfcpu 0.9.1
 # https://github.com/pdfcpu/pdfcpu
 
+version=20250310
+
 function checkreq
 {
 	which $1 > /dev/null
@@ -18,19 +20,21 @@ function checkreq
 
 set +x
 #echo "pwd=$(pwd)"
-#echo "arg=$1"
+#echo "last arg=${!#}"
+#echo "nb args=$#"
 
-if ! [ -n "$1" ]
+if [ $# = 0 ]
 then
-	echo "md2dpf: you forgot to mention a filename"
-	read
+	echo "md2pdf version: $version, https://github.com/skramm/md2pdf"
+	echo "usage: md2pdf [-L] filename.md"
 	exit 1
 fi
 
-if ! [ -e "$1" ]
+filename=${!#}
+
+if ! [ -e "$filename" ]
 then
-	echo "md2dpf: file $1 is non-existent"
-	read
+	echo "md2dpf: can't find file $filename, exiting"
 	exit 2
 fi
 
@@ -40,18 +44,29 @@ checkreq wkhtmltopdf
 haspdfcpu=true
 which pdfcpu > /dev/null
 if [ $? != 0 ]; then
-	echo "pdfcpu not installed, no page numbers printed on output pdf file"
+	echo "md2dpf: pdfcpu not installed, no page numbers printed on output pdf file"
 	haspdfcpu=false
 fi
 # output logs are stored here:
 mkdir -p /tmp/md2pdf
 
-a=$1
+landscape=false
+if [ $# -gt 1 ]
+then
+	if [ $1 = "-L" ]
+	then
+		echo "md2pdf: Landscape mode"
+		landscape=true
+	else
+		echo "md2pdf: unrecognized option '$1', ignoring"
+	fi
+fi	
+
 # remove file extension
-b=${a%.*}
+b=${filename%.*}
 #echo "b=$b"
 
-ext=${a##*.}
+ext=${filename##*.}
 #echo "ext=$ext"
 
 # remove path
@@ -59,11 +74,25 @@ name=${b##*/}
 #echo "name=$name"
 
 # path only (needed to get the images)
-loc=${a%/*}
+loc=${filename%/*}
 #echo "loc=$loc"
 
-echo "md2pdf: converting file $a to $b.pdf"
-pushd "$loc" >/dev/null
+echo "md2pdf: converting file $filename to $b.pdf"
+
+# if the location, as determined by above, is a folder, then
+# "cd" into it
+isDirectory=false
+if [ -d "$loc" ]
+then
+	pushd "$loc" >/dev/null
+	isDirectory=true
+fi
+
+opt=
+if [ $landscape = true ]
+then
+	opt="--pdf-engine-opt=-O --pdf-engine-opt=Landscape"
+fi
 
 pandoc -V papersize=A4 \
 	--standalone \
@@ -72,6 +101,7 @@ pandoc -V papersize=A4 \
 	--css=/usr/local/share/md2pdf/mystyles.css \
 	--metadata pagetitle="$name" \
 	--pdf-engine-opt=--enable-local-file-access \
+	$opt \
 	-V margin-left=0.7in \
 	-V margin-right=0.7in \
 	-V margin-top=0.7in \
@@ -104,5 +134,10 @@ else
 	cp /tmp/md2pdf/out.pdf "$name.pdf"
 fi
 
-popd >/dev/null
+# this is required, because if started from shell, we did not change current folder
+if [ isDirectory = true ]
+then
+	popd >/dev/null
+fi
+
 
