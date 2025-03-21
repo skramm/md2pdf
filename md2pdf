@@ -94,11 +94,21 @@ then
 	opt="--pdf-engine-opt=-O --pdf-engine-opt=Landscape"
 fi
 
+# if source folder holds a file md2pdf.css, then use it instead of the default one
+cssfile=/usr/local/share/md2pdf/md2pdf.css
+if [ -f md2pdf.css ]
+then
+	echo "md2dpf: using local CSS file"
+	cssfile=md2pdf.css
+else
+	echo "md2dpf: using default CSS file"
+fi
+
 pandoc -V papersize=A4 \
 	--standalone \
 	--verbose \
 	--template=/usr/local/share/md2pdf/mytemplate.html5 \
-	--css=/usr/local/share/md2pdf/mystyles.css \
+	--css=$cssfile \
 	--metadata pagetitle="$name" \
 	--pdf-engine-opt=--enable-local-file-access \
 	$opt \

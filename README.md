@@ -5,6 +5,8 @@ A pandoc-based Markdown to pdf script
 * https://github.com/skramm/md2pdf
 
 ## News
+* 20250321:
+  * added ability to provide own css file
 * 20250310:
   * added option to print on Landscape
 * 20250306:
@@ -61,8 +63,20 @@ Passing the `-L` option will generate a landscape pdf:
 $ md2pdf -L myfile.md
 ```
 
-For KDE/Gnome and related desktop environnments, a `.desktop` file is also provided and installed, so it is now possible to use this directly with a right-clic on a .md file.
+For other tweaks of the pdf appearance, you can provide a CSS file named `md2pdf.css` in current folder.
+It will then be used in replacement of the default one.
 
+The best idea is to copy the default one (`/usr/local/share/md2pdf/md2pdf.css`) into the folder hoding your .md file, then edit it.
+For example, increasing font size can be done with:
+```
+body{font-size:120%;}
+```
+
+Refer to some
+[CSS references](https://www.google.com/search?q=css+reference)
+for other tweaks.
+
+For KDE/Gnome and related desktop environnments, a `.desktop` file is also provided and installed, so it is now possible to use this directly with a right-clic on a .md file.
 This might require to run `$ sudo update-desktop-database` to get it available into your file explorer.
 
 
@@ -83,10 +97,10 @@ This can be done by adding the required CSS styles either in the included Pandoc
 in case of trouble, you can check the standard output files:  
 `/tmp/md2pdf/md2pdf_FILENAME.stdout` and `/tmp/md2pdf/md2pdf_FILENAME.stderr`
 
-**New feature**  
+**Page numbers**  
 With the help of pdfcpu, the output file now has the page numbers printed on bottom of page.
 This is done by a post-processing step, pdfcpu takes the Pandoc output file and adds on each page the page numbers.
-
+See link below for install steps.
 
 ### 2 - Processing sets of file
 

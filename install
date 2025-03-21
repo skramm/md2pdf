@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# https://github.com/skramm/md2pdf
 # This installs the program to a standardized Linux system-wide path.
 # Needs to be run with sudo
 
@@ -7,8 +8,8 @@ cp md2pdf /usr/local/bin/
 chmod +x /usr/local/bin/md2pdf
 mkdir -p /usr/local/share/md2pdf
 cp mytemplate.html5 /usr/local/share/md2pdf/
-cp mystyles.css /usr/local/share/md2pdf/
 cp md2pdf.desktop /usr/share/applications
+cp md2pdf.css /usr/local/share/md2pdf/
 
 #xdg-mime default md2pdf.desktop text/markdown
 
