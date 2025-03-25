@@ -36,5 +36,14 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           pwd
-          
-          
+      - name: Install required stuff
+        run: |
+           apt-get update
+           apt-get install pandoc
+           apt-get install wkhtmltopdf
+      - name: Install
+        run: ./install
+      - name: Run demo test
+        run: md2pdf README.md
+
+
