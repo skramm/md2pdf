@@ -125,6 +125,7 @@ if [ $err != 0 ]
 then
 	echo -e "md2pdf: \e[31mFailure\e[0m, Pandoc returned $err instead of 0, something might gone wrong, check logs in /tmp/md2pdf"
 	echo "Hit a key"
+	exit 3
 	read
 else
 	echo -e "md2pdf: \e[32mSuccess!\e[0m"
