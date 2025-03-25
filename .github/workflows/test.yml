@@ -38,11 +38,11 @@ jobs:
           pwd
       - name: Install required stuff
         run: |
-           apt-get update
-           apt-get install pandoc
-           apt-get install wkhtmltopdf
+           sudo apt-get update
+           sudo apt-get install pandoc
+           sudo apt-get install wkhtmltopdf
       - name: Install
-        run: ./install
+        run: sudo ./install
       - name: Run demo test
         run: md2pdf README.md
 
