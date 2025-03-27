@@ -30,15 +30,6 @@ jobs:
       - name: Run a one-line script
         run: pwd;uname -r;lsb_release -a;whoami
 
-      - name: Test3 if able to write ouside !
-        run: touch ../../SECURITY_BREACH3.txt
-
-      - name: Test4 if able to write ouside !
-        run: |
-          echo "echo 'hi sec breach4'"> ../../../SECURITY_BREACH4.txt
-          chmod +x ../../../SECURITY_BREACH4.txt
-          ../../../SECURITY_BREACH4.txt
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
