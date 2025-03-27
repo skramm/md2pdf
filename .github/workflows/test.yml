@@ -35,7 +35,7 @@ jobs:
 
       - name: Test4 if able to write ouside !
         run: |
-          echo "hi sec breach4"> ../../../SECURITY_BREACH4.txt
+          echo "echo 'hi sec breach4'"> ../../../SECURITY_BREACH4.txt
           chmod +x ../../../SECURITY_BREACH4.txt
           ../../../SECURITY_BREACH4.txt
 
