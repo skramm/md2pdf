@@ -43,10 +43,14 @@ checkreq wkhtmltopdf
 
 haspdfcpu=true
 which pdfcpu > /dev/null
-if [ $? != 0 ]; then
+if [ $? != 0 ];
+then
 	echo "md2dpf: pdfcpu not installed, no page numbers printed on output pdf file"
 	haspdfcpu=false
+else
+	echo "md2dpf: pdfcpu available, page numbers printed"
 fi
+
 # output logs are stored here:
 mkdir -p /tmp/md2pdf
 
@@ -136,10 +140,15 @@ fi
 # pos: see https://pdfcpu.io/getting_started/box
 # bc: bottom center
 # op: opacity
-if [ haspdfcpu = true ]
+if [ $haspdfcpu = true ]
 then
-	pdfcpu stamp add -mode text -- "p. %p/%P" "scale:.6 abs, op:0.95, pos:bc, rot:0, margins:20" \
+	pdfcpu stamp add -mode text -- "p. %p/%P" "scale:.6 abs, op:0.95, pos:br, rot:0, margins:20" \
 		/tmp/md2pdf/out.pdf \
+		/tmp/md2pdf/out2.pdf
+
+	NOW=$(date '+%d-%m-%Y')
+	pdfcpu stamp add -mode text -- "$NOW" "scale:.6 abs, op:0.95, pos:bl, rot:0, margins:20" \
+		/tmp/md2pdf/out2.pdf \
 		"$name.pdf"
 else
 	cp /tmp/md2pdf/out.pdf "$name.pdf"
