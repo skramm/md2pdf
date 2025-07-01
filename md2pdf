@@ -5,7 +5,10 @@
 # 2025/03: tested with pdfcpu 0.9.1
 # https://github.com/pdfcpu/pdfcpu
 
-version=20250310
+version=20250701
+
+# change this for other size
+PAPER=A4
 
 function checkreq
 {
@@ -55,16 +58,40 @@ fi
 mkdir -p /tmp/md2pdf
 
 landscape=false
+toc=false
+
+#if [ $# -gt 1 ]
+#then#z
+#	if [ $1 = "-L" ]
+#	then
+#		echo "md2pdf: Landscape mode"
+#		landscape=true
+#	else
+#		echo "md2pdf: unrecognized option '$1', ignoring"
+#	fi
+#fi	
+
+
 if [ $# -gt 1 ]
 then
-	if [ $1 = "-L" ]
-	then
-		echo "md2pdf: Landscape mode"
-		landscape=true
-	else
-		echo "md2pdf: unrecognized option '$1', ignoring"
-	fi
-fi	
+	while [ "$1" != "" ];
+	do
+		case $1 in
+			-l | -L )
+				landscape=true
+				echo "md2pdf: landscape mode"
+				;;
+			-t | -T )
+				toc=true
+				echo "md2pdf: adding TOC"
+				;;
+			-h | --help )	echo "usage"
+				exit
+				;;
+		esac
+	shift
+	done
+fi
 
 # remove file extension
 b=${filename%.*}
@@ -98,6 +125,13 @@ then
 	opt="--pdf-engine-opt=-O --pdf-engine-opt=Landscape"
 fi
 
+opt2=
+if [ $toc = true ]
+then
+	opt2="--toc"
+fi
+
+
 # if source folder holds a file md2pdf.css, then use it instead of the default one
 cssfile=/usr/local/share/md2pdf/md2pdf.css
 if [ -f md2pdf.css ]
@@ -108,7 +142,7 @@ else
 	echo "md2dpf: using default CSS file"
 fi
 
-pandoc -V papersize=A4 \
+pandoc -V papersize=$PAPER \
 	--standalone \
 	--verbose \
 	--template=/usr/local/share/md2pdf/mytemplate.html5 \
@@ -116,6 +150,7 @@ pandoc -V papersize=A4 \
 	--metadata pagetitle="$name" \
 	--pdf-engine-opt=--enable-local-file-access \
 	$opt \
+	$opt2 \
 	-V margin-left=0.7in \
 	-V margin-right=0.7in \
 	-V margin-top=0.7in \
