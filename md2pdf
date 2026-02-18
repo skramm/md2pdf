@@ -5,10 +5,16 @@
 # 2025/03: tested with pdfcpu 0.9.1
 # https://github.com/pdfcpu/pdfcpu
 
-version=20250701
+version=20260218
 
 # change this for other size
 PAPER=A4
+
+# unit: inch
+MARGIN_T=0.6
+MARGIN_B=0.6
+MARGIN_L=0.3
+MARGIN_R=0.3
 
 function checkreq
 {
@@ -30,6 +36,10 @@ if [ $# = 0 ]
 then
 	echo "md2pdf version: $version, https://github.com/skramm/md2pdf"
 	echo "usage: md2pdf [-L] filename.md"
+	echo -e "requires pandoc and wkhtmltopdf"
+	echo -e "Installed versions:\n -$(pandoc --version | head -1)"
+	echo " -$(wkhtmltopdf --version)"
+	
 	exit 1
 fi
 
@@ -59,17 +69,6 @@ mkdir -p /tmp/md2pdf
 
 landscape=false
 toc=false
-
-#if [ $# -gt 1 ]
-#then#z
-#	if [ $1 = "-L" ]
-#	then
-#		echo "md2pdf: Landscape mode"
-#		landscape=true
-#	else
-#		echo "md2pdf: unrecognized option '$1', ignoring"
-#	fi
-#fi	
 
 
 if [ $# -gt 1 ]
@@ -146,15 +145,15 @@ pandoc -V papersize=$PAPER \
 	--standalone \
 	--verbose \
 	--template=/usr/local/share/md2pdf/mytemplate.html5 \
+	-V margin-left=${MARGIN_L}in \
+	-V margin-right=${MARGIN_R}in \
+	-V margin-top=${MARGIN_T}in \
+	-V margin-bottom=${MARGIN_B}in \
 	--css=$cssfile \
 	--metadata pagetitle="$name" \
 	--pdf-engine-opt=--enable-local-file-access \
 	$opt \
 	$opt2 \
-	-V margin-left=0.7in \
-	-V margin-right=0.7in \
-	-V margin-top=0.7in \
-	-V margin-bottom=0.7in \
 	--from commonmark+autolink_bare_uris+pipe_tables \
 	-t html \
 	"$name.$ext" -o /tmp/md2pdf/out.pdf 1>"/tmp/md2pdf/md2pdf_$name.stdout" 2>"/tmp/md2pdf/md2pdf_$name.stderr"

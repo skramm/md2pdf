@@ -1,4 +1,10 @@
-body{font-family:DejaVuSans;font-size:100%;background-color:white;}
+body{
+	font-family:DejaVuSans;
+	font-size:100%;
+	background-color:white;
+	margin-left:15mm;
+	margin-right:15mm;
+}
 h1{border-bottom:1px solid black;}
 pre{font-size:120%;}
 
