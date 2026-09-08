@@ -149,6 +149,10 @@ then
 	NOW=$(date '+%d-%m-%Y')
 	pdfcpu stamp add -mode text -- "$NOW" "scale:.6 abs, op:0.95, pos:bl, rot:0, margins:20" \
 		/tmp/md2pdf/out2.pdf \
+		/tmp/md2pdf/out3.pdf
+
+	pdfcpu stamp add -mode text -- "$filename" "scale:.6 abs, op:0.95, pos:bc, rot:0, margins:20" \
+		/tmp/md2pdf/out3.pdf \
 		"$name.pdf"
 else
 	cp /tmp/md2pdf/out.pdf "$name.pdf"
