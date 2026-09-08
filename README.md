@@ -76,7 +76,7 @@ $ md2pdf -L myfile.md
 For other tweaks of the pdf appearance, you can provide a CSS file named `md2pdf.css` in current folder.
 It will then be used in replacement of the default one.
 
-The best idea is to copy the default one (`/usr/local/share/md2pdf/md2pdf.css`) into the folder hoding your .md file, then edit it.
+The best idea is to copy the default one (`/usr/local/share/md2pdf/md2pdf.css`) into the folder holding your .md file, then edit it.
 For example, increasing font size can be done with:
 ```
 body{font-size:120%;}
@@ -107,8 +107,8 @@ Converting from Markdown to pdf using Pandoc needs to be done in two steps, but 
 The first method requires a complete LaTeX environment installed on your system, which isn't that frequent for most users.
 Thus, this scripts uses the second method.
 Moreover, it is much easier to tweak the appearance using CSS.
-This can be done by adding the required CSS styles either in the included Pandoc template, or in the included CSS stylesheet
-(that are located after install in /usr/local/share/md2pdf/).
+This can be done either by editing the default CSS stylesheet
+(located in `/usr/local/share/md2pdf/`) or by having in the current folder a file named `md2pdf.css` that will be used by the script.
 
 in case of trouble, you can check the standard output files:  
 `/tmp/md2pdf/md2pdf_FILENAME.stdout` and `/tmp/md2pdf/md2pdf_FILENAME.stderr`
@@ -140,12 +140,13 @@ This is done with `pushd` and restored with `popd`.
 * wkhtmltopdf: 0.12.5
 * pdfcpu (optional): 0.9.1
 
-## References
+### References
 * https://pandoc.org/
 * https://wkhtmltopdf.org/
 * https://pdfcpu.io/ - https://github.com/pdfcpu/pdfcpu
 
-## TODO
+The two first ones can be easily installed with:  
+`$ sudo apt install pandoc wkhtmltopdf`  
+For `pdfcpu`, a binary is provided on the website.
 
-* add a CI Github worker to generate online a demo pdf
 
